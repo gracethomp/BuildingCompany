@@ -1,0 +1,2 @@
+# BuildingCompany
+Solvd Inc. homework
