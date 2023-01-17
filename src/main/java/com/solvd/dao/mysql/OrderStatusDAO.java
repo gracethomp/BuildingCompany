@@ -1,7 +1,7 @@
 package com.solvd.dao.mysql;
 
-import com.solvd.dao.ICityDAO;
-import com.solvd.models.City;
+import com.solvd.dao.IOrderStatusDAO;
+import com.solvd.models.OrderStatus;
 import com.solvd.utils.ConnectionPool;
 
 import java.sql.Connection;
@@ -9,46 +9,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CityDAO extends MySQL implements ICityDAO {
-    private static final CityDAO INSTANCE = new CityDAO();
+public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
+    private static final OrderStatusDAO INSTANCE = new OrderStatusDAO();
 
-    private CityDAO(){}
+    private OrderStatusDAO(){}
 
-    public static CityDAO getInstance() {
+    public static OrderStatusDAO getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public City getByID(Long id) {
-        City city = new City();
+    public OrderStatus getByID(Long id) {
+        OrderStatus orderStatus = new OrderStatus();
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * from cities where id = ?");
+                    connection.prepareStatement("SELECT * from orderStatuses where id = ?");
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                city = new City((long) resultSet.getInt("id"),
-                        resultSet.getString("city"));
+                orderStatus = new OrderStatus((long) resultSet.getInt("id"),
+                        resultSet.getString("status"));
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return orderStatus;
     }
 
     @Override
-    public void update(City city) {
+    public void update(OrderStatus orderStatus) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE cities SET city=? where id=?");
-            preparedStatement.setString(1, city.getCityName());
-            preparedStatement.setInt(2, city.getId().intValue());
+                    .prepareStatement("UPDATE orderStatuses SET status=? where id=?");
+            preparedStatement.setString(1, orderStatus.getStatusName());
+            preparedStatement.setInt(2, orderStatus.getId().intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -58,13 +58,13 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City create(City city) {
+    public OrderStatus create(OrderStatus orderStatus) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO cities(city) VALUES ?");
-            preparedStatement.setString(1, city.getCityName());
+                    .prepareStatement("INSERT INTO orderStatuses(status) VALUES ?");
+            preparedStatement.setString(1, orderStatus.getStatusName());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return orderStatus;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE from cities where id =?");
+                    .prepareStatement("DELETE from orderStatuses where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {

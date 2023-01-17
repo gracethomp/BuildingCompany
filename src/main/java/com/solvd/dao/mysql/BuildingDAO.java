@@ -29,9 +29,13 @@ public class BuildingDAO extends MySQL implements IBaseDAO<Building> {
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                building = new Building(resultSet.getString("name"), new BuildingType(),
-                        resultSet.getDouble("area"), resultSet.getInt("floors"),
-                        new ConstructionMaterial(), new City(), resultSet.getString("adress"));
+                building = new Building(resultSet.getString("name"), BuildingTypeDAO.getInstance()
+                        .getByID((long) resultSet.getInt("type_id")), resultSet.
+                        getDouble("area"), resultSet.getInt("floors"),
+                        ConstructionMaterialDAO.getInstance().getByID((long) resultSet.
+                                getInt("constructionMaterial_id")), CityDAO.getInstance().
+                        getByID((long) resultSet.getInt("city_id")), resultSet.
+                        getString("adress"));
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();

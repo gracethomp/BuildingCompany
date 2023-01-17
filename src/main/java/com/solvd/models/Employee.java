@@ -1,19 +1,23 @@
 package com.solvd.models;
 
-public class Employee extends User{
+public class Employee extends Entity{
     private String title;
     private Double salary;
     private Department department;
     private Boolean editUserRight;
     private Boolean editBuildingRight;
+    private User user;
 
     public Employee(){}
-    public Employee(String title, Double salary, Department department, Boolean editUserRight, Boolean editBuildingRight){
+    public Employee(Long id, String title, Double salary, Department department,
+                    Boolean editUserRight, Boolean editBuildingRight, User user){
+        super(id);
         this.title = title;
         this.salary = salary;
         this.department = department;
         this.editUserRight = editUserRight;
         this.editBuildingRight = editBuildingRight;
+        this.user = user;
     }
 
     public String getTitle() {
@@ -36,6 +40,10 @@ public class Employee extends User{
         return editUserRight;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -54,5 +62,9 @@ public class Employee extends User{
 
     public void setEditBuildingRight(Boolean editBuildingRight) {
         this.editBuildingRight = editBuildingRight;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

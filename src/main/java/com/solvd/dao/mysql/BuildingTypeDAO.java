@@ -1,7 +1,7 @@
 package com.solvd.dao.mysql;
 
-import com.solvd.dao.ICityDAO;
-import com.solvd.models.City;
+import com.solvd.dao.IBuildingTypeDAO;
+import com.solvd.models.BuildingType;
 import com.solvd.utils.ConnectionPool;
 
 import java.sql.Connection;
@@ -9,46 +9,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CityDAO extends MySQL implements ICityDAO {
-    private static final CityDAO INSTANCE = new CityDAO();
+public class BuildingTypeDAO extends MySQL implements IBuildingTypeDAO {
+    private static final BuildingTypeDAO INSTANCE = new BuildingTypeDAO();
 
-    private CityDAO(){}
+    private BuildingTypeDAO(){}
 
-    public static CityDAO getInstance() {
+    public static BuildingTypeDAO getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public City getByID(Long id) {
-        City city = new City();
+    public BuildingType getByID(Long id) {
+        BuildingType buildingType = new BuildingType();
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * from cities where id = ?");
+                    connection.prepareStatement("SELECT * from types where id = ?");
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                city = new City((long) resultSet.getInt("id"),
-                        resultSet.getString("city"));
+                buildingType = new BuildingType((long) resultSet.getInt("id"),
+                        resultSet.getString("type"));
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return buildingType;
     }
 
     @Override
-    public void update(City city) {
+    public void update(BuildingType buildingType) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE cities SET city=? where id=?");
-            preparedStatement.setString(1, city.getCityName());
-            preparedStatement.setInt(2, city.getId().intValue());
+                    .prepareStatement("UPDATE types SET type=? where id=?");
+            preparedStatement.setString(1, buildingType.getTypeName());
+            preparedStatement.setInt(2, buildingType.getId().intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -58,13 +58,13 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City create(City city) {
+    public BuildingType create(BuildingType buildingType) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO cities(city) VALUES ?");
-            preparedStatement.setString(1, city.getCityName());
+                    .prepareStatement("INSERT INTO types(type) VALUES ?");
+            preparedStatement.setString(1, buildingType.getTypeName());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return buildingType;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE from cities where id =?");
+                    .prepareStatement("DELETE from types where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {

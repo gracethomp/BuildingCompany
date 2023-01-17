@@ -1,7 +1,7 @@
 package com.solvd.dao.mysql;
 
-import com.solvd.dao.ICityDAO;
-import com.solvd.models.City;
+import com.solvd.dao.IConstructionMaterialDAO;
+import com.solvd.models.ConstructionMaterial;
 import com.solvd.utils.ConnectionPool;
 
 import java.sql.Connection;
@@ -9,46 +9,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CityDAO extends MySQL implements ICityDAO {
-    private static final CityDAO INSTANCE = new CityDAO();
+public class ConstructionMaterialDAO extends MySQL implements IConstructionMaterialDAO {
+    private static final ConstructionMaterialDAO INSTANCE = new ConstructionMaterialDAO();
 
-    private CityDAO(){}
+    private ConstructionMaterialDAO(){}
 
-    public static CityDAO getInstance() {
+    public static ConstructionMaterialDAO getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public City getByID(Long id) {
-        City city = new City();
+    public ConstructionMaterial getByID(Long id) {
+        ConstructionMaterial constructionMaterial = new ConstructionMaterial();
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * from cities where id = ?");
+                    connection.prepareStatement("SELECT * from constructionMaterials where id = ?");
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                city = new City((long) resultSet.getInt("id"),
-                        resultSet.getString("city"));
+                constructionMaterial = new ConstructionMaterial((long) resultSet.getInt("id"),
+                        resultSet.getString("material"));
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return constructionMaterial;
     }
 
     @Override
-    public void update(City city) {
+    public void update(ConstructionMaterial constructionMaterial) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE cities SET city=? where id=?");
-            preparedStatement.setString(1, city.getCityName());
-            preparedStatement.setInt(2, city.getId().intValue());
+                    .prepareStatement("UPDATE constructionMaterials SET material=? where id=?");
+            preparedStatement.setString(1, constructionMaterial.getMaterial());
+            preparedStatement.setInt(2, constructionMaterial.getId().intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -58,13 +58,13 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City create(City city) {
+    public ConstructionMaterial create(ConstructionMaterial constructionMaterial) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
                     .prepareStatement("INSERT INTO cities(city) VALUES ?");
-            preparedStatement.setString(1, city.getCityName());
+            preparedStatement.setString(1, constructionMaterial.getMaterial());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return constructionMaterial;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE from cities where id =?");
+                    .prepareStatement("DELETE from constructionMaterials where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {

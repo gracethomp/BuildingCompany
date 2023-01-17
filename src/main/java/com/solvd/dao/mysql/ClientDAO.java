@@ -1,7 +1,7 @@
 package com.solvd.dao.mysql;
 
-import com.solvd.dao.ICityDAO;
-import com.solvd.models.City;
+import com.solvd.dao.IClientDAO;
+import com.solvd.models.Client;
 import com.solvd.utils.ConnectionPool;
 
 import java.sql.Connection;
@@ -9,46 +9,48 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CityDAO extends MySQL implements ICityDAO {
-    private static final CityDAO INSTANCE = new CityDAO();
+public class ClientDAO extends MySQL implements IClientDAO {
+    private static final ClientDAO INSTANCE = new ClientDAO();
 
-    private CityDAO(){}
+    private ClientDAO(){}
 
-    public static CityDAO getInstance() {
+    public static ClientDAO getInstance() {
         return INSTANCE;
     }
 
     @Override
-    public City getByID(Long id) {
-        City city = new City();
+    public Client getByID(Long id) {
+        Client client = new Client();
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * from cities where id = ?");
+                    connection.prepareStatement("SELECT * from clients where id = ?");
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                city = new City((long) resultSet.getInt("id"),
-                        resultSet.getString("city"));
+                client = new Client((long) resultSet.getInt("id"),
+                        CityDAO.getInstance().getByID((long) resultSet.getInt("city_id")),
+                        UserDAO.getInstance().getByID((long) resultSet.getInt("userId")));
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return client;
     }
 
     @Override
-    public void update(City city) {
+    public void update(Client client) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("UPDATE cities SET city=? where id=?");
-            preparedStatement.setString(1, city.getCityName());
-            preparedStatement.setInt(2, city.getId().intValue());
+                    .prepareStatement("UPDATE clients SET userId=?, city_id=? where id=?");
+            preparedStatement.setInt(1, client.getUser().getId().intValue());
+            preparedStatement.setInt(2, client.getCity().getId().intValue());
+            preparedStatement.setInt(3, client.getId().intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -58,13 +60,14 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City create(City city) {
+    public Client create(Client client) {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO cities(city) VALUES ?");
-            preparedStatement.setString(1, city.getCityName());
+                    .prepareStatement("INSERT INTO clients(userId, city_id) VALUES (?,?)");
+            preparedStatement.setInt(1, client.getUser().getId().intValue());
+            preparedStatement.setInt(2, client.getCity().getId().intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
@@ -72,7 +75,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
+        return client;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class CityDAO extends MySQL implements ICityDAO {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("DELETE from cities where id =?");
+                    .prepareStatement("DELETE from clients where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
         } catch (InterruptedException | SQLException e) {
