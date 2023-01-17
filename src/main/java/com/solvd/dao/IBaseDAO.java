@@ -1,8 +1,10 @@
 package com.solvd.dao;
 
+import com.solvd.exceptions.DAOException;
+
 public interface IBaseDAO<T> {
-    T getByID(Long id);
-    void update(T entity);
-    T create(T entity);
-    void remove(Long id);
+    T getByID(Long id) throws DAOException;
+    void update(T entity) throws DAOException;
+    T create(T entity) throws DAOException;
+    void remove(Long id) throws DAOException;
 }

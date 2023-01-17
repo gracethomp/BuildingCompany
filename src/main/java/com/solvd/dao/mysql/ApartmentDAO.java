@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IApartmentDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.Apartment;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class ApartmentDAO extends MySQL implements IApartmentDAO {
     private static final ApartmentDAO INSTANCE = new ApartmentDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(ApartmentDAO.class);
+
     private ApartmentDAO(){}
 
     public static ApartmentDAO getInstance() {
@@ -19,7 +24,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
     }
 
     @Override
-    public Apartment getByID(Long id) {
+    public Apartment getByID(Long id) throws DAOException {
         Apartment apartment = new Apartment();
         Connection connection = null;
         try {
@@ -34,8 +39,10 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
                         resultSet.getDouble("area"),
                         BuildingDAO.getInstance().getByID(apartment.getBuilding().getId()));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -43,7 +50,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
     }
 
     @Override
-    public void update(Apartment apartment) {
+    public void update(Apartment apartment) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -55,15 +62,17 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
             preparedStatement.setInt(4, apartment.getBuilding().getId().intValue());
             preparedStatement.setInt(5, apartment.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public Apartment create(Apartment apartment) {
+    public Apartment create(Apartment apartment) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -74,8 +83,10 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
             preparedStatement.setDouble(3, apartment.getArea());
             preparedStatement.setInt(4, apartment.getBuilding().getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -84,7 +95,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -92,8 +103,10 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
                     .prepareStatement("DELETE from appartments where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

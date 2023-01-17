@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IBuildingOrderDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.BuildingOrder;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
     private static final BuildingOrderDAO INSTANCE = new BuildingOrderDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(BuildingOrderDAO.class);
+
     private BuildingOrderDAO(){}
 
     public static BuildingOrderDAO getInstance() {
@@ -19,7 +24,7 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
     }
 
     @Override
-    public BuildingOrder getByID(Long id) {
+    public BuildingOrder getByID(Long id) throws DAOException {
         BuildingOrder buildingOrder = new BuildingOrder();
         Connection connection = null;
         try {
@@ -37,8 +42,10 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
                         .getByID((long) resultSet.getInt("status_id")),ApartmentDAO.getInstance()
                         .getByID((long) resultSet.getInt("appartment_id")));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -46,7 +53,7 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
     }
 
     @Override
-    public void update(BuildingOrder buildingOrder) {
+    public void update(BuildingOrder buildingOrder) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -61,15 +68,17 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
             preparedStatement.setInt(6, buildingOrder.getStatus().getId().intValue());
             preparedStatement.setInt(7, buildingOrder.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public BuildingOrder create(BuildingOrder buildingOrder) {
+    public BuildingOrder create(BuildingOrder buildingOrder) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -83,8 +92,10 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
             preparedStatement.setInt(5, buildingOrder.getManager().getId().intValue());
             preparedStatement.setInt(6, buildingOrder.getStatus().getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -93,7 +104,7 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -101,8 +112,10 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
                     .prepareStatement("DELETE from buildingOrders where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

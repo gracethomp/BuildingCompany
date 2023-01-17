@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IDepartmentDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.Department;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class DepartmentDAO extends MySQL implements IDepartmentDAO {
     private static final DepartmentDAO INSTANCE = new DepartmentDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(DepartmentDAO.class);
+
     private DepartmentDAO(){}
 
     public static DepartmentDAO getInstance() {
@@ -19,7 +24,7 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
     }
 
     @Override
-    public Department getByID(Long id) {
+    public Department getByID(Long id) throws DAOException {
         Department department = new Department();
         Connection connection = null;
         try {
@@ -32,8 +37,10 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
                 department = new Department((long) resultSet.getInt("id"),
                         resultSet.getString("department"), resultSet.getString("phoneNumber"));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -41,7 +48,7 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
     }
 
     @Override
-    public void update(Department department) {
+    public void update(Department department) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -51,15 +58,17 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
             preparedStatement.setString(2, department.getPhoneNumber());
             preparedStatement.setInt(3, department.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public Department create(Department department) {
+    public Department create(Department department) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -68,8 +77,10 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
             preparedStatement.setString(1, department.getDepartmentName());
             preparedStatement.setString(2, department.getPhoneNumber());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -78,7 +89,7 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -86,8 +97,10 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
                     .prepareStatement("DELETE from departments where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

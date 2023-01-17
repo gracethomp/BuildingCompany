@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.ICityDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.City;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class CityDAO extends MySQL implements ICityDAO {
     private static final CityDAO INSTANCE = new CityDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(CityDAO.class);
+
     private CityDAO(){}
 
     public static CityDAO getInstance() {
@@ -19,7 +24,7 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City getByID(Long id) {
+    public City getByID(Long id) throws DAOException {
         City city = new City();
         Connection connection = null;
         try {
@@ -32,8 +37,10 @@ public class CityDAO extends MySQL implements ICityDAO {
                 city = new City((long) resultSet.getInt("id"),
                         resultSet.getString("city"));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -41,7 +48,7 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public void update(City city) {
+    public void update(City city) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -50,15 +57,17 @@ public class CityDAO extends MySQL implements ICityDAO {
             preparedStatement.setString(1, city.getCityName());
             preparedStatement.setInt(2, city.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public City create(City city) {
+    public City create(City city) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -66,8 +75,10 @@ public class CityDAO extends MySQL implements ICityDAO {
                     .prepareStatement("INSERT INTO cities(city) VALUES ?");
             preparedStatement.setString(1, city.getCityName());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -76,7 +87,7 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -84,8 +95,10 @@ public class CityDAO extends MySQL implements ICityDAO {
                     .prepareStatement("DELETE from cities where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

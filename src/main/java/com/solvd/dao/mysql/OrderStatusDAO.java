@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IOrderStatusDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.OrderStatus;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
     private static final OrderStatusDAO INSTANCE = new OrderStatusDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(OrderStatusDAO.class);
+
     private OrderStatusDAO(){}
 
     public static OrderStatusDAO getInstance() {
@@ -19,7 +24,7 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
     }
 
     @Override
-    public OrderStatus getByID(Long id) {
+    public OrderStatus getByID(Long id) throws DAOException {
         OrderStatus orderStatus = new OrderStatus();
         Connection connection = null;
         try {
@@ -32,8 +37,10 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
                 orderStatus = new OrderStatus((long) resultSet.getInt("id"),
                         resultSet.getString("status"));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -41,7 +48,7 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
     }
 
     @Override
-    public void update(OrderStatus orderStatus) {
+    public void update(OrderStatus orderStatus) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -50,15 +57,17 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
             preparedStatement.setString(1, orderStatus.getStatusName());
             preparedStatement.setInt(2, orderStatus.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public OrderStatus create(OrderStatus orderStatus) {
+    public OrderStatus create(OrderStatus orderStatus) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -66,8 +75,10 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
                     .prepareStatement("INSERT INTO orderStatuses(status) VALUES ?");
             preparedStatement.setString(1, orderStatus.getStatusName());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -76,7 +87,7 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -84,8 +95,10 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
                     .prepareStatement("DELETE from orderStatuses where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

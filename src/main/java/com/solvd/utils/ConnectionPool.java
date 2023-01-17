@@ -1,5 +1,6 @@
 package com.solvd.utils;
 
+import com.solvd.exceptions.ConnectionPoolException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -34,7 +35,7 @@ public class ConnectionPool {
     }
 
 
-    public Connection getConnection() throws InterruptedException {
+    public Connection getConnection() throws ConnectionPoolException {
         if(size < COUNT) {
             Connection connection;
             try {
@@ -42,11 +43,17 @@ public class ConnectionPool {
                         bundle.getString(USER), bundle.getString(PASSWORD));
                 availableConnection.add(connection);
             } catch (SQLException e) {
-                LOGGER.error("");
+                LOGGER.error(e);
+                throw new ConnectionPoolException();
             }
             size++;
         }
-        return availableConnection.take();
+        try {
+            return availableConnection.take();
+        } catch (InterruptedException e) {
+            LOGGER.error(e);
+            throw new ConnectionPoolException();
+        }
     }
 
     public void releaseConnection(Connection connection) {

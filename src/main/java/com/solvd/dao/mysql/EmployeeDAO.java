@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IEmployeeDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.Employee;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +15,15 @@ import java.sql.SQLException;
 public class EmployeeDAO extends MySQL implements IEmployeeDAO {
     private static final EmployeeDAO INSTANCE = new EmployeeDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(EmployeeDAO.class);
+
     private EmployeeDAO(){}
 
     public static EmployeeDAO getInstance() {
         return INSTANCE;
     }
     @Override
-    public Employee getByID(Long id) {
+    public Employee getByID(Long id) throws DAOException {
         Employee employee = new Employee();
         Connection connection = null;
         try {
@@ -35,8 +40,10 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
                         resultSet.getBoolean("editBuildingRight"),
                         UserDAO.getInstance().getByID((long) resultSet.getInt("user_id")));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -44,7 +51,7 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Employee employee) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -59,15 +66,17 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
             preparedStatement.setBoolean(6, employee.getEditBuildingRight());
             preparedStatement.setInt(7, employee.getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public Employee create(Employee employee) {
+    public Employee create(Employee employee) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -81,8 +90,10 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
             preparedStatement.setBoolean(5, employee.getEditUserRight());
             preparedStatement.setBoolean(6, employee.getEditBuildingRight());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         }
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
@@ -91,7 +102,7 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -99,8 +110,10 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
                     .prepareStatement("DELETE from employees where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }

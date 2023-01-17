@@ -1,8 +1,11 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IUserDAO;
+import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.exceptions.DAOException;
 import com.solvd.models.User;
 import com.solvd.utils.ConnectionPool;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +15,8 @@ import java.sql.SQLException;
 public class UserDAO extends MySQL implements IUserDAO {
     private static final UserDAO INSTANCE = new UserDAO();
 
+    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+
     private UserDAO(){}
 
     public static UserDAO getInstance() {
@@ -19,7 +24,7 @@ public class UserDAO extends MySQL implements IUserDAO {
     }
 
     @Override
-    public User getByID(Long id) {
+    public User getByID(Long id) throws DAOException {
         User user = new User();
         Connection connection = null;
         try {
@@ -34,8 +39,10 @@ public class UserDAO extends MySQL implements IUserDAO {
                         resultSet.getString("lastName"), resultSet.getString("phoneNumber"),
                         UserStatusDAO.getInstance().getByID((long) resultSet.getInt("status_id")));
             }
-        } catch (SQLException | InterruptedException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -43,7 +50,7 @@ public class UserDAO extends MySQL implements IUserDAO {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -57,15 +64,17 @@ public class UserDAO extends MySQL implements IUserDAO {
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.setInt(6, user.getStatus().getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -79,8 +88,10 @@ public class UserDAO extends MySQL implements IUserDAO {
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.setInt(6, user.getStatus().getId().intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
@@ -88,7 +99,7 @@ public class UserDAO extends MySQL implements IUserDAO {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Long id) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -96,8 +107,10 @@ public class UserDAO extends MySQL implements IUserDAO {
                     .prepareStatement("DELETE from users where id =?");
             preparedStatement.setInt(1, id.intValue());
             preparedStatement.executeUpdate();
-        } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            preparedStatement.close();
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error(e);
+            throw new DAOException();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
