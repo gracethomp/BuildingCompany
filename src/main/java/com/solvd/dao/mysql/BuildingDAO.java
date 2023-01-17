@@ -1,6 +1,7 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IBaseDAO;
+import com.solvd.dao.IBuildingDAO;
 import com.solvd.models.*;
 import com.solvd.utils.ConnectionPool;
 
@@ -9,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BuildingDAO extends MySQL implements IBaseDAO<Building> {
+public class BuildingDAO extends MySQL implements IBuildingDAO {
     private static final BuildingDAO INSTANCE = new BuildingDAO();
 
     private BuildingDAO(){}

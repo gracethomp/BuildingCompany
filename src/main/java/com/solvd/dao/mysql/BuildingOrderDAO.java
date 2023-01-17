@@ -94,6 +94,17 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
 
     @Override
     public void remove(Long id) {
-
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("DELETE from buildingOrders where id =?");
+            preparedStatement.setInt(1, id.intValue());
+            preparedStatement.executeUpdate();
+        } catch (InterruptedException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
     }
 }
