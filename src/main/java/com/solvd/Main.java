@@ -1,6 +1,5 @@
 package com.solvd;
 
-import com.solvd.dao.mysql.BuildingDAO;
 import com.solvd.dao.mysql.UserDAO;
 
 public class Main {

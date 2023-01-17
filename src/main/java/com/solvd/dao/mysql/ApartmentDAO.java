@@ -29,8 +29,9 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
             preparedStatement.setInt(1, id.intValue());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                apartment = new Apartment((long) resultSet.getInt("id"), resultSet.getInt("rooms"),
-                        resultSet.getInt("floor"), resultSet.getDouble("area"),
+                apartment = new Apartment((long) resultSet.getInt("id"), resultSet
+                        .getInt("rooms"), resultSet.getInt("floor"),
+                        resultSet.getDouble("area"),
                         BuildingDAO.getInstance().getByID(apartment.getBuilding().getId()));
             }
         } catch (SQLException | InterruptedException e) {

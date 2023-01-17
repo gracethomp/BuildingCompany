@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 import java.util.concurrent.*;
 
 public class ConnectionPool {
@@ -12,6 +13,12 @@ public class ConnectionPool {
     public static final String USER = "user";
     public static final String PASSWORD = "password";
     public static final int COUNT = 5;
+    private static final String CONFIG_FILE_NAME = "mysql";
+
+    private final ResourceBundle bundle = ResourceBundle.getBundle(CONFIG_FILE_NAME);
+
+    private static int size = 0;
+
     private static final ConnectionPool instance = new ConnectionPool();
 
     public BlockingQueue<Connection> availableConnection;
@@ -20,16 +27,6 @@ public class ConnectionPool {
 
     private ConnectionPool(){
         this.availableConnection = new ArrayBlockingQueue<>(COUNT);
-        for (int i = 0; i < COUNT; i++) {
-            Connection connection;
-            try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/buildCompany",
-                        "root","root");
-                availableConnection.add(connection);
-            } catch (SQLException e) {
-                LOGGER.error("jhg");
-            }
-        }
     }
 
     public static ConnectionPool getInstance() {
@@ -38,6 +35,17 @@ public class ConnectionPool {
 
 
     public Connection getConnection() throws InterruptedException {
+        if(size < COUNT) {
+            Connection connection;
+            try {
+                connection = DriverManager.getConnection(bundle.getString(URL),
+                        bundle.getString(USER), bundle.getString(PASSWORD));
+                availableConnection.add(connection);
+            } catch (SQLException e) {
+                LOGGER.error("");
+            }
+            size++;
+        }
         return availableConnection.take();
     }
 
