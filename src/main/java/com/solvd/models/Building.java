@@ -76,4 +76,17 @@ public class Building extends Entity{
     public void setFloors(Integer floors) {
         this.floors = floors;
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "buildingName='" + buildingName + '\'' +
+                ", type=" + type +
+                ", area=" + area +
+                ", floors=" + floors +
+                ", material=" + material +
+                ", city=" + city +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
