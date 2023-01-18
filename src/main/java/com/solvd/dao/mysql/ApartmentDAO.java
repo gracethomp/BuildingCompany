@@ -56,7 +56,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE appartments SET rooms=?, floor=?, area=?, building_id=? where id=?");
-            preparedStatement.setInt(1, apartment.getRoom());
+            preparedStatement.setInt(1, apartment.getRooms());
             preparedStatement.setInt(2, apartment.getFloor());
             preparedStatement.setDouble(3, apartment.getArea());
             preparedStatement.setInt(4, apartment.getBuilding().getId().intValue());
@@ -78,7 +78,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
                     .prepareStatement("INSERT INTO appartments(rooms, floor, area, building_id) VALUES (?,?,?,?)");
-            preparedStatement.setInt(1, apartment.getRoom());
+            preparedStatement.setInt(1, apartment.getRooms());
             preparedStatement.setInt(2, apartment.getFloor());
             preparedStatement.setDouble(3, apartment.getArea());
             preparedStatement.setInt(4, apartment.getBuilding().getId().intValue());
