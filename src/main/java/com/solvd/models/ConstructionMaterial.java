@@ -19,4 +19,12 @@ public class ConstructionMaterial extends Entity{
     public void setMaterial(String material) {
         this.material = material;
     }
+
+    @Override
+    public String toString() {
+        return "ConstructionMaterial{" +
+                "material='" + material + '\'' +
+                ", buildings=" + buildings +
+                '}';
+    }
 }

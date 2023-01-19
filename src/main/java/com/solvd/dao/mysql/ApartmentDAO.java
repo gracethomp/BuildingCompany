@@ -4,6 +4,7 @@ import com.solvd.dao.IApartmentDAO;
 import com.solvd.exceptions.ConnectionPoolException;
 import com.solvd.exceptions.DAOException;
 import com.solvd.models.Apartment;
+import com.solvd.models.Building;
 import com.solvd.utils.ConnectionPool;
 import org.apache.log4j.Logger;
 
@@ -11,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApartmentDAO extends MySQL implements IApartmentDAO {
     private static final ApartmentDAO INSTANCE = new ApartmentDAO();
@@ -37,7 +40,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
                 apartment = new Apartment((long) resultSet.getInt("id"), resultSet
                         .getInt("rooms"), resultSet.getInt("floor"),
                         resultSet.getDouble("area"),
-                        BuildingDAO.getInstance().getByID(apartment.getBuilding().getId()));
+                        BuildingDAO.getInstance().getByID((long) resultSet.getInt("building_id")));
             }
             preparedStatement.close();
         } catch (SQLException | ConnectionPoolException e) {
@@ -110,5 +113,28 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
+    }
+
+    @Override
+    public List<Apartment> getAllByBuildingID(Long id) throws DAOException {
+        List<Apartment> apartments = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from appartments " +
+                    "where building_id = ?");
+            preparedStatement.setInt(1, id.intValue());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                apartments.add(new Apartment((long) resultSet.getInt(1), resultSet.getInt(2),
+                        resultSet.getInt(3), resultSet.getDouble(4),
+                        BuildingDAO.getInstance().getByID((long) resultSet.getInt(5))));
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.error(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return apartments;
     }
 }
