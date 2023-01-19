@@ -1,2 +1,2 @@
 # BuildingCompany
-Solvd Inc. homework
+Solvd LABA homework
