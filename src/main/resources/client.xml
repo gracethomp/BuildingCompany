@@ -25,7 +25,7 @@
                 <title>Manager</title>
                 <salary>5456</salary>
                 <department id="2">Marketing</department>
-                <editUserRight>true</editUserRight>
+                <editUserRight>false</editUserRight>
                 <editBuildingRight>true</editBuildingRight>
                 <userManager id = '1'>
                     <email>manager.surname@mail.com</email>
@@ -60,7 +60,7 @@
                     <fName>Namme</fName>
                     <lName>Surnanme</lName>
                     <phoneNumber>5434754786</phoneNumber>
-                    <status id ='4'>unblocked</status>
+                    <userStatus id ='4'>unblocked</userStatus>
                 </userManager>
             </manager>
             <totalPrice>76544</totalPrice>

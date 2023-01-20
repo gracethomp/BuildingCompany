@@ -19,6 +19,7 @@ public class ClientHandler extends DefaultHandler {
     private OrderStatus orderStatus;
     private BuildingType buildingType;
     private ConstructionMaterial constructionMaterial;
+    private Department department;
     private List<BuildingOrder> buildingOrders;
     private StringBuilder stringBuilder = new StringBuilder();
 
@@ -77,9 +78,13 @@ public class ClientHandler extends DefaultHandler {
                 stringBuilder = new StringBuilder();
                 constructionMaterial.setId(Long.valueOf(attributes.getValue("id")));
             }
+            case "department" -> {
+                department = new Department();
+                stringBuilder = new StringBuilder();
+                department.setId(Long.valueOf(attributes.getValue("id")));
+            }
             default -> stringBuilder = new StringBuilder();
         }
-        System.out.println("start element " + qName);
     }
 
     @Override
@@ -125,8 +130,16 @@ public class ClientHandler extends DefaultHandler {
                 building.setMaterial(constructionMaterial);
             }
             case "address" -> building.setAddress(stringBuilder.toString());
+            case "title" -> employee.setTitle(stringBuilder.toString());
+            case "salary" -> employee.setSalary(Double.valueOf(stringBuilder.toString()));
+            case "editUserRight" -> employee.setEditUserRight(Boolean.valueOf(stringBuilder.toString()));
+            case "editBuildingRight" -> employee.setEditBuildingRight(Boolean.valueOf(stringBuilder.toString()));
+            case "department" -> {
+                department.setDepartmentName(stringBuilder.toString());
+                employee.setDepartment(department);
+            }
+            case "totalPrice" -> buildingOrder.setTotalPrice(Double.valueOf(stringBuilder.toString()));
         }
-        System.out.println("end element");
     }
 
     @Override
