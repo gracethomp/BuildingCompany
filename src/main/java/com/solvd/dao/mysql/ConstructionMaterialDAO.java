@@ -1,8 +1,8 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IConstructionMaterialDAO;
-import com.solvd.exceptions.ConnectionPoolException;
-import com.solvd.exceptions.DAOException;
+import com.solvd.utils.exceptions.ConnectionPoolException;
+import com.solvd.utils.exceptions.DAOException;
 import com.solvd.models.ConstructionMaterial;
 import com.solvd.utils.ConnectionPool;
 import org.apache.log4j.Logger;

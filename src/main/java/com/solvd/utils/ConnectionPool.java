@@ -1,6 +1,6 @@
 package com.solvd.utils;
 
-import com.solvd.exceptions.ConnectionPoolException;
+import com.solvd.utils.exceptions.ConnectionPoolException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

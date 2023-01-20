@@ -1,4 +1,4 @@
-package com.solvd.exceptions;
+package com.solvd.utils.exceptions;
 
 public class ConnectionPoolException extends Exception{
     public ConnectionPoolException(){}

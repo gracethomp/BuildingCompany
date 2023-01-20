@@ -1,4 +1,4 @@
-package com.solvd.parsels;
+package com.solvd.utils.parsels;
 
 import com.solvd.models.*;
 import org.xml.sax.Attributes;

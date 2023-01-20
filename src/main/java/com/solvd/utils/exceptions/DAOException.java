@@ -1,4 +1,4 @@
-package com.solvd.exceptions;
+package com.solvd.utils.exceptions;
 
 public class DAOException extends Exception{
     public DAOException(){}

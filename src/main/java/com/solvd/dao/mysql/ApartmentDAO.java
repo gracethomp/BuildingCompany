@@ -1,10 +1,9 @@
 package com.solvd.dao.mysql;
 
 import com.solvd.dao.IApartmentDAO;
-import com.solvd.exceptions.ConnectionPoolException;
-import com.solvd.exceptions.DAOException;
+import com.solvd.utils.exceptions.ConnectionPoolException;
+import com.solvd.utils.exceptions.DAOException;
 import com.solvd.models.Apartment;
-import com.solvd.models.Building;
 import com.solvd.utils.ConnectionPool;
 import org.apache.log4j.Logger;
 

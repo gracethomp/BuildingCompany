@@ -1,6 +1,7 @@
 package com.solvd;
 
-import com.solvd.parsels.ClientHandler;
+import com.solvd.utils.parsels.ClientHandler;
+import com.solvd.utils.parsels.DOMExample;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,6 +18,7 @@ public class Main {
             ClientHandler handler = new ClientHandler();
             saxParser.parse(new File("src/main/resources/client.xml"), handler);
             System.out.println(handler.getClient());
+            DOMExample.doParse();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }

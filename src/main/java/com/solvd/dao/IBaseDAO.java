@@ -1,6 +1,6 @@
 package com.solvd.dao;
 
-import com.solvd.exceptions.DAOException;
+import com.solvd.utils.exceptions.DAOException;
 
 public interface IBaseDAO<T> {
     T getByID(Long id) throws DAOException;

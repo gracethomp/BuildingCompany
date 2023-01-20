@@ -1,6 +1,6 @@
 package com.solvd.dao;
 
-import com.solvd.exceptions.DAOException;
+import com.solvd.utils.exceptions.DAOException;
 import com.solvd.models.Apartment;
 
 import java.util.List;
