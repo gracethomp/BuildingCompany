@@ -101,8 +101,7 @@ public class Building extends Entity{
     @Override
     public String toString() {
         return "Building{" +
-                "buildingName='" + buildingName + '\'' +
-                ", type=" + type +
+                "type=" + type +
                 ", area=" + area +
                 ", floors=" + floors +
                 ", material=" + material +

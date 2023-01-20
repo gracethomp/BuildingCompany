@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="client" type="clientType"/>
+  <xs:complexType name="userStatusType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="userType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="email"/>
+      <xs:element type="xs:string" name="password"/>
+      <xs:element type="xs:string" name="fName"/>
+      <xs:element type="xs:string" name="lName"/>
+      <xs:element type="xs:string" name="phoneNumber"/>
+      <xs:element type="userStatusType" name="userStatus"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id"/>
+  </xs:complexType>
+  <xs:complexType name="cityType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="typeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="constructionMaterialType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="cityBuildingType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="buildingType">
+    <xs:sequence>
+      <xs:element type="typeType" name="type"/>
+      <xs:element name="area">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="587"/>
+            <xs:enumeration value="7544"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="floors"/>
+      <xs:element type="constructionMaterialType" name="constructionMaterial"/>
+      <xs:element type="cityBuildingType" name="cityBuilding"/>
+      <xs:element name="address">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="address 2/2a"/>
+            <xs:enumeration value="address 2/6a"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="departmentType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="userManagerType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="email"/>
+      <xs:element type="xs:string" name="password"/>
+      <xs:element type="xs:string" name="fName"/>
+      <xs:element type="xs:string" name="lName"/>
+      <xs:element type="xs:string" name="phoneNumber"/>
+      <xs:element type="userStatusType" name="userStatus" minOccurs="0"/>
+      <xs:element type="statusType" name="status" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="managerType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="title"/>
+      <xs:element type="xs:string" name="salary"/>
+      <xs:element type="departmentType" name="department"/>
+      <xs:element type="xs:string" name="editUserRight"/>
+      <xs:element type="xs:string" name="editBuildingRight"/>
+      <xs:element type="userManagerType" name="userManager"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="statusType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="buildingOrderType">
+    <xs:sequence>
+      <xs:element type="buildingType" name="building"/>
+      <xs:element type="managerType" name="manager"/>
+      <xs:element name="totalPrice">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="54345"/>
+            <xs:enumeration value="76544"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="statusType" name="status"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="buildingOrdersType">
+    <xs:sequence>
+      <xs:element type="buildingOrderType" name="buildingOrder" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientType">
+    <xs:sequence>
+      <xs:element type="userType" name="user"/>
+      <xs:element type="cityType" name="city"/>
+      <xs:element type="buildingOrdersType" name="buildingOrders"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

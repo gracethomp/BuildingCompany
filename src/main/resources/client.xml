@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<client xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="client.xsd">
+    <user id = '1'>
+        <email>name.surname@mail.com</email>
+        <password>qwe123_</password>
+        <fName>Name</fName>
+        <lName>Surname</lName>
+        <phoneNumber>5434556786</phoneNumber>
+        <userStatus id ='4'>unblocked</userStatus>
+    </user>
+    <city id = '1'>Kyiv</city>
+    <buildingOrders>
+        <buildingOrder id = "654">
+            <building id="5">
+                <type id='1'>townhouse</type>
+                <area>587</area>
+                <floors>2</floors>
+                <constructionMaterial id="1">steel</constructionMaterial>
+                <cityBuilding id = '1'>Kyiv</cityBuilding>
+                <address>address 2/2a</address>
+            </building>
+            <manager id="1">
+                <title>Manager</title>
+                <salary>5456</salary>
+                <department id="2">Marketing</department>
+                <editUserRight>true</editUserRight>
+                <editBuildingRight>true</editBuildingRight>
+                <userManager id = '1'>
+                    <email>manager.surname@mail.com</email>
+                    <password>qwe123_</password>
+                    <fName>Namme</fName>
+                    <lName>Surnanme</lName>
+                    <phoneNumber>5434754786</phoneNumber>
+                    <userStatus id ='4'>unblocked</userStatus>
+                </userManager>
+            </manager>
+            <totalPrice>54345</totalPrice>
+            <status id='1'>accepted</status>
+        </buildingOrder>
+        <buildingOrder id = "865">
+            <building id="6">
+                <type id='1'>townhouse</type>
+                <area>7544</area>
+                <floors>2</floors>
+                <constructionMaterial id="2">wood</constructionMaterial>
+                <cityBuilding id = '2'>Lviv</cityBuilding>
+                <address>address 2/6a</address>
+            </building>
+            <manager id="1">
+                <title>Manager</title>
+                <salary>5456</salary>
+                <department id="2">Marketing</department>
+                <editUserRight>true</editUserRight>
+                <editBuildingRight>true</editBuildingRight>
+                <userManager id = '1'>
+                    <email>manager.surname@mail.com</email>
+                    <password>qwe123_</password>
+                    <fName>Namme</fName>
+                    <lName>Surnanme</lName>
+                    <phoneNumber>5434754786</phoneNumber>
+                    <status id ='4'>unblocked</status>
+                </userManager>
+            </manager>
+            <totalPrice>76544</totalPrice>
+            <status id='1'>accepted</status>
+        </buildingOrder>
+    </buildingOrders>
+</client>

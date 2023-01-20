@@ -67,4 +67,16 @@ public class Employee extends Entity{
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "title='" + title + '\'' +
+                ", salary=" + salary +
+                ", department=" + department +
+                ", editUserRight=" + editUserRight +
+                ", editBuildingRight=" + editBuildingRight +
+                ", user=" + user +
+                '}';
+    }
 }

@@ -24,7 +24,6 @@ public class ConstructionMaterial extends Entity{
     public String toString() {
         return "ConstructionMaterial{" +
                 "material='" + material + '\'' +
-                ", buildings=" + buildings +
                 '}';
     }
 }

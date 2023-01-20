@@ -37,4 +37,10 @@ public class City extends Entity{
     public void setClients(List<Client> clients) {
         this.clients = clients;
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityName='" + cityName + '\'' + '}';
+    }
 }

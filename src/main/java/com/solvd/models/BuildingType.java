@@ -20,4 +20,10 @@ public class BuildingType extends Entity{
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+
+    @Override
+    public String toString() {
+        return "BuildingType{" +
+                "typeName='" + typeName + '}';
+    }
 }

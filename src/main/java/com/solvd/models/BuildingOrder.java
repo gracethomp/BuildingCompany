@@ -76,4 +76,15 @@ public class BuildingOrder extends Entity{
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "BuildingOrder{" +
+                "building=" + building +
+                ", manager=" + manager +
+                ", totalPrice=" + totalPrice +
+                ", apartment=" + apartment +
+                ", status=" + status +
+                '}';
+    }
 }

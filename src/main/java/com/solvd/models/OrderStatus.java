@@ -28,4 +28,11 @@ public class OrderStatus extends Entity{
     public void setBuildingOrders(List<BuildingOrder> buildingOrders) {
         this.buildingOrders = buildingOrders;
     }
+
+    @Override
+    public String toString() {
+        return "OrderStatus{" +
+                "statusName='" + statusName + '\'' +
+                '}';
+    }
 }
