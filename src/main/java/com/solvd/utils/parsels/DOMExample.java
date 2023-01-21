@@ -21,7 +21,26 @@ public class DOMExample {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File("src/main/resources/client.xml"));
+
         Node userFromFile = document.getDocumentElement().getElementsByTagName("user").item(0);
+        User user = readUser(userFromFile);
+        client.setUser(user);
+
+        Node cityFromFile = document.getDocumentElement().getElementsByTagName("city").item(0);
+        client.setCity(readCity(cityFromFile));
+        NodeList buildingOrdersFromFile = document.getElementsByTagName("buildingOrder");
+        List<BuildingOrder> buildingOrders = new ArrayList<>();
+        for (int i = 0; i < buildingOrdersFromFile.getLength(); i++) {
+            Node buildingOrderFromFile = buildingOrdersFromFile.item(i);
+            Node userManagerFromFile = document.getDocumentElement().
+                    getElementsByTagName("userManager").item(0);
+            buildingOrders.add(readBuildingOrder(buildingOrderFromFile, userManagerFromFile));
+        }
+        client.setBuildingOrders(buildingOrders);
+        System.out.println(client);
+    }
+
+    private static User readUser(Node userFromFile) {
         User user = new User();
         user.setId(Long.valueOf(userFromFile.getAttributes().getNamedItem("id").getNodeValue()));
         if (userFromFile.getNodeType() == Node.ELEMENT_NODE) {
@@ -34,40 +53,67 @@ public class DOMExample {
             user.setStatus(new UserStatus(Long.valueOf(element.getElementsByTagName("userStatus").item(0)
                     .getAttributes().getNamedItem("id").getNodeValue()), element.getElementsByTagName("userStatus").
                     item(0).getTextContent()));
-            client.setUser(user);
         }
-        Node cityFromFile = document.getDocumentElement().getElementsByTagName("city").item(0);
-        client.setCity(new City(Long.valueOf(cityFromFile.getAttributes().getNamedItem("id").getNodeValue()),
-                cityFromFile.getTextContent()));
-        NodeList buildingOrdersFromFile = document.getElementsByTagName("buildingOrder");
-        List<BuildingOrder> buildingOrders = new ArrayList<>();
-        for(int i = 0; i < buildingOrdersFromFile.getLength(); i++) {
-            BuildingOrder buildingOrder = new BuildingOrder();
-            Node buildingOrderFromFile = buildingOrdersFromFile.item(i);
-            if (buildingOrderFromFile.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) buildingOrderFromFile;
-                Node buildingFileName = element.getElementsByTagName("building").item(0);
-                if(buildingFileName.getNodeType() == Node.ELEMENT_NODE){
-                    Element element1 = (Element) buildingFileName;
-                    Building building = new Building("", new BuildingType(Long.valueOf(element1.getElementsByTagName("type")
+        return user;
+    }
+
+    private static Department readDepartment(Node departmentFromFile) {
+        return new Department(Long.valueOf(departmentFromFile.getAttributes().
+                getNamedItem("id").getNodeValue()), departmentFromFile.getTextContent(), "");
+    }
+    private static Employee readEmployee(Element element, Node managerFromFile, Node userManagerFromFile) {
+        Employee employee = new Employee();
+        if (managerFromFile.getNodeType() == Node.ELEMENT_NODE) {
+            Element element1 = (Element) managerFromFile;
+            employee = new Employee(Long.valueOf(element.getAttribute("id")),
+                    element1.getElementsByTagName("title").item(0).getTextContent(),
+                    Double.valueOf(element1.getElementsByTagName("salary").item(0).getTextContent()),
+                    readDepartment(element1.getElementsByTagName("department").item(0)),
+                    Boolean.valueOf(element1.getElementsByTagName("editUserRight")
+                            .item(0).getTextContent()),
+                    Boolean.valueOf(element1.getElementsByTagName("editUserRight")
+                            .item(0).getTextContent()),
+                    readUser(userManagerFromFile));
+        }
+        return employee;
+    }
+    private static Building readBuilding(Element element, Node buildingFileName) {
+        Building building = new Building();
+        if (buildingFileName.getNodeType() == Node.ELEMENT_NODE) {
+            Element element1 = (Element) buildingFileName;
+            building = new Building("", new BuildingType(Long.valueOf(element1.
+                    getElementsByTagName("type").item(0).getAttributes().getNamedItem("id").getNodeValue()),
+                    element1.getElementsByTagName("type").item(0).getTextContent()),
+                    Double.valueOf(element1.getElementsByTagName("area").item(0).getTextContent()),
+                    Integer.valueOf(element1.getElementsByTagName("floors").item(0).getTextContent()),
+                    new ConstructionMaterial(Long.valueOf(element1.getElementsByTagName("constructionMaterial")
                             .item(0).getAttributes().getNamedItem("id").getNodeValue()), element1.
-                            getElementsByTagName("type").item(0).getTextContent()),
-                            Double.valueOf(element1.getElementsByTagName("area").item(0).getTextContent()),
-                            Integer.valueOf(element1.getElementsByTagName("floors").item(0).getTextContent()),
-                            new ConstructionMaterial(Long.valueOf(element1.getElementsByTagName("constructionMaterial")
-                                    .item(0).getAttributes().getNamedItem("id").getNodeValue()), element1.
-                                    getElementsByTagName("constructionMaterial").item(0).getTextContent()),
-                            new City(Long.valueOf(element1.getElementsByTagName("cityBuilding").item(0).
-                                    getAttributes().getNamedItem("id").getNodeValue()),
-                                    element1.getElementsByTagName("cityBuilding").item(0).getTextContent()),
-                            element1.getElementsByTagName("address").item(0).getTextContent());
-                    building.setId(Long.valueOf(element.getAttribute("id")));
-                    buildingOrder.setBuilding(building);
-                }
-            }
-            buildingOrders.add(buildingOrder);
+                            getElementsByTagName("constructionMaterial").item(0).getTextContent()),
+                    readCity(element1.getElementsByTagName("cityBuilding").item(0)),
+                    element1.getElementsByTagName("address").item(0).getTextContent());
+            building.setId(Long.valueOf(element.getAttribute("id")));
         }
-        client.setBuildingOrders(buildingOrders);
-        System.out.println(client);
+        return building;
+    }
+
+    private static City readCity(Node cityFromFile) {
+        return new City(Long.valueOf(cityFromFile.getAttributes().getNamedItem("id").getNodeValue()),
+                cityFromFile.getTextContent());
+    }
+    private static BuildingOrder readBuildingOrder(Node buildingOrderFromFile, Node userManagerFromFile) {
+        BuildingOrder buildingOrder = new BuildingOrder();
+        if (buildingOrderFromFile.getNodeType() == Node.ELEMENT_NODE) {
+            Element element = (Element) buildingOrderFromFile;
+            Node buildingFileName = element.getElementsByTagName("building").item(0);
+            buildingOrder.setBuilding(readBuilding(element, buildingFileName));
+            Node managerFromFile = element.getElementsByTagName("manager").item(0);
+            buildingOrder.setManager(readEmployee(element, managerFromFile, userManagerFromFile));
+            buildingOrder.setTotalPrice(Double.valueOf(element.getElementsByTagName("totalPrice")
+                    .item(0).getTextContent()));
+            buildingOrder.setStatus(new OrderStatus(Long.valueOf(element.getElementsByTagName("status")
+                    .item(0).getAttributes().getNamedItem("id").getNodeValue()),
+                    element.getElementsByTagName("status").item(0).getTextContent()));
+        }
+        return buildingOrder;
     }
 }
