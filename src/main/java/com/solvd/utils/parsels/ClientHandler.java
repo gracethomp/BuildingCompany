@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientHandler extends DefaultHandler {
-    private Client client = new Client();
+    private final Client client = new Client();
     private User user;
     private UserStatus userStatus;
     private City city;
@@ -109,9 +109,7 @@ public class ClientHandler extends DefaultHandler {
                 city.setCityName(stringBuilder.toString());
                 building.setCity(city);
             }
-            case "buildingOrders" -> {
-                client.setBuildingOrders(buildingOrders);
-            }
+            case "buildingOrders" -> client.setBuildingOrders(buildingOrders);
             case "type" -> {
                 buildingType.setTypeName(stringBuilder.toString());
                 building.setType(buildingType);
@@ -145,10 +143,6 @@ public class ClientHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         stringBuilder.append(new String(ch, start, length));
-    }
-
-    public UserStatus getUserStatus() {
-        return userStatus;
     }
 
     public Client getClient() {
