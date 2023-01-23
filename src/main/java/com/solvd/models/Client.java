@@ -1,5 +1,6 @@
 package com.solvd.models;
 
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,13 @@ public class Client extends Entity{
         this.user = user;
     }
 
+    public Long getId() {
+        return super.getId();
+    }
+
     public City getCity() {
         return city;
     }
-
     public User getUser() {
         return user;
     }
