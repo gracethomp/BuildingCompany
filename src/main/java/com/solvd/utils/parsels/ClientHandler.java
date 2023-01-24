@@ -1,6 +1,5 @@
 package com.solvd.utils.parsels;
 
-import com.solvd.dao.mysql.BuildingOrderDAO;
 import com.solvd.models.*;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;

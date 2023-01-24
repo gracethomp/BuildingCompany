@@ -1,6 +1,7 @@
 package com.solvd.utils.parsels;
 
 import com.solvd.models.*;
+import org.apache.log4j.Logger;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StAXParser {
+    private static final Logger LOGGER = Logger.getLogger(StAXParser.class);
+
     public static void doParse() {
         List<BuildingOrder> buildingOrders = new ArrayList<>();
         Building building = new Building();
@@ -109,8 +112,9 @@ public class StAXParser {
                 }
             }
         } catch (XMLStreamException | FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
-        System.out.println(client);
+        System.out.println();
+        LOGGER.info(client);
     }
 }
