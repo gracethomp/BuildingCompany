@@ -1,0 +1,103 @@
+{
+  "id": 1,
+  "department": "IT",
+  "phoneNumber": "+380675432490",
+  "employees": [
+    {
+      "id" : 235,
+      "title" : "Software Engineer",
+      "salary": 3200,
+      "editUserRight" : true,
+      "editBuildingRight" : false,
+      "user" : {
+        "id" : 655,
+        "email" : "user123@mail.com",
+        "password": "qwe123_",
+        "fName": "Name",
+        "lName": "Surname",
+        "phoneNumber": "+380434324903",
+        "userStatus" : {
+          "id" : 4,
+          "status" : "unblocked"
+        }
+      }
+    },
+    {
+      "id" : 455,
+      "title" : "QA Engineer",
+      "salary": 3000,
+      "editUserRight" : false,
+      "editBuildingRight" : false,
+      "user" : {
+        "id" : 2670,
+        "email" : "user567@mail.com",
+        "password": "ewq321-",
+        "fName": "Name2",
+        "lName": "Surname6",
+        "phoneNumber": "+380752345409",
+        "userStatus" : {
+          "id" : 4,
+          "status" : "unblocked"
+        }
+      }
+    },
+    {
+      "id" : 333,
+      "title" : "Software Engineer",
+      "salary": 4200,
+      "editUserRight" : true,
+      "editBuildingRight" : true,
+      "user" : {
+        "id" : 9855,
+        "email" : "user123456@mail.com",
+        "password": "qwe123456_",
+        "fName": "Name45",
+        "lName": "Surnam67e",
+        "phoneNumber": "+380765324087",
+        "userStatus" : {
+          "id" : 5,
+          "status" : "blocked"
+        }
+      }
+    },
+    {
+      "id" : 135,
+      "title" : "UI/UX Designer",
+      "salary": 2200,
+      "editUserRight" : true,
+      "editBuildingRight" : false,
+      "user" : {
+        "id" : 489,
+        "email" : "user1fe45tyg23@mail.com",
+        "password": "qwe123_",
+        "fName": "Grace",
+        "lName": "Surn876yame",
+        "phoneNumber": "+380437544903",
+        "userStatus" : {
+          "id" : 4,
+          "status" : "unblocked"
+        }
+      }
+    },
+    {
+      "id" : 432,
+      "title" : "Software Engineer",
+      "salary": 3200,
+      "editUserRight" : true,
+      "editBuildingRight" : false,
+      "user" : {
+        "id" : 32655,
+        "email" : "user34123@mail.com",
+        "password": "q32we123_",
+        "fName": "dsfsdf!@3",
+        "lName": "FSDFDSF",
+        "phoneNumber": "+380236674903",
+        "userStatus" : {
+          "id" : 5,
+          "status" : "blocked"
+        }
+      }
+    }
+  ]
+
+}
