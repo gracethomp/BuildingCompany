@@ -1,5 +1,6 @@
 package com.solvd.models.jaxb;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -63,7 +64,7 @@ public class EmployeeJaxb {
     public void setEditBuildingRight(Boolean editBuildingRight) {
         this.editBuildingRight = editBuildingRight;
     }
-
+    @XmlElement(name = "userManager")
     public UserJaxb getUser() {
         return user;
     }

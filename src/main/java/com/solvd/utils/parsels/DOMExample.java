@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DOMExample {
+
     public static void doParse() throws ParserConfigurationException, IOException, SAXException {
         Client client = new Client();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

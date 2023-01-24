@@ -1,19 +1,22 @@
 package com.solvd.models.jaxb;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
+
+@XmlRootElement
 public class DepartmentJaxb {
     private Long id;
     private String departmentName;
-    private String phoneNumber;
 
     public DepartmentJaxb() {
     }
 
-    public DepartmentJaxb(Long id, String departmentName, String phoneNumber) {
+    public DepartmentJaxb(Long id, String departmentName) {
         this.id = id;
         this.departmentName = departmentName;
-        this.phoneNumber = phoneNumber;
     }
-
+    @XmlAttribute
     public Long getId() {
         return id;
     }
@@ -21,7 +24,7 @@ public class DepartmentJaxb {
     public void setId(Long id) {
         this.id = id;
     }
-
+    @XmlValue
     public String getDepartmentName() {
         return departmentName;
     }
@@ -30,20 +33,11 @@ public class DepartmentJaxb {
         this.departmentName = departmentName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     @Override
     public String toString() {
         return "DepartmentJaxb{" +
                 "id=" + id +
                 ", departmentName='" + departmentName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

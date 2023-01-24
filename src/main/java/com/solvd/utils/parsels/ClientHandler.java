@@ -1,6 +1,8 @@
 package com.solvd.utils.parsels;
 
+import com.solvd.dao.mysql.BuildingOrderDAO;
 import com.solvd.models.*;
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -23,14 +25,16 @@ public class ClientHandler extends DefaultHandler {
     private List<BuildingOrder> buildingOrders;
     private StringBuilder stringBuilder = new StringBuilder();
 
+    private static final Logger LOGGER = Logger.getLogger(ClientHandler.class);
+
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("start doc");
+        LOGGER.info("start doc");
     }
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("end doc");
+        LOGGER.info("end doc");
     }
 
     @Override

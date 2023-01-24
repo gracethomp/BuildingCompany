@@ -1,10 +1,7 @@
 package com.solvd.models.jaxb;
 
-import com.solvd.models.BuildingType;
-import com.solvd.models.City;
-import com.solvd.models.ConstructionMaterial;
-
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -13,7 +10,7 @@ public class BuildingJaxb {
     private BuildingTypeJaxb type;
     private Double area;
     private Integer floors;
-    private ConstructionMaterialJaxb material;
+    private ConstructionMaterialJaxb constructionMaterial;
     private CityJaxb city;
     private String address;
 
@@ -26,7 +23,7 @@ public class BuildingJaxb {
         this.type = type;
         this.area = area;
         this.floors = floors;
-        this.material = material;
+        this.constructionMaterial = material;
         this.city = city;
         this.address = address;
     }
@@ -63,14 +60,14 @@ public class BuildingJaxb {
         this.floors = floors;
     }
 
-    public ConstructionMaterialJaxb getMaterial() {
-        return material;
+    public ConstructionMaterialJaxb getConstructionMaterial() {
+        return constructionMaterial;
     }
 
-    public void setMaterial(ConstructionMaterialJaxb material) {
-        this.material = material;
+    public void setConstructionMaterial(ConstructionMaterialJaxb constructionMaterial) {
+        this.constructionMaterial = constructionMaterial;
     }
-
+    @XmlElement(name = "cityBuilding")
     public CityJaxb getCity() {
         return city;
     }
@@ -94,7 +91,7 @@ public class BuildingJaxb {
                 ", type=" + type +
                 ", area=" + area +
                 ", floors=" + floors +
-                ", material=" + material +
+                ", material=" + constructionMaterial +
                 ", city=" + city +
                 ", address='" + address + '\'' +
                 '}';
