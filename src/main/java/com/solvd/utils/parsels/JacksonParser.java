@@ -14,7 +14,7 @@ public class JacksonParser {
 
     public static void doParse() throws IOException {
         System.out.println();
-        byte[] jsonData = Files.readAllBytes(Paths.get("src/main/resources/department.json"));
+        byte[] jsonData = Files.readAllBytes(Paths.get("src/main/resources/filesToParse/department.json"));
         ObjectMapper objectMapper = new ObjectMapper();
         Department department = objectMapper.readValue(jsonData, Department.class);
 

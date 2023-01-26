@@ -1,8 +1,5 @@
 package com.solvd.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class OrderStatus extends Entity{
     private String statusName;
 

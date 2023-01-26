@@ -15,7 +15,7 @@ public class JaxbParser {
         JAXBContext jaxbContext = JAXBContext.newInstance(ClientJaxb.class);
         Unmarshaller jaxbUnmarshaller;
         jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        ClientJaxb client= (ClientJaxb) jaxbUnmarshaller.unmarshal(new File("src/main/resources/client.xml"));
+        ClientJaxb client= (ClientJaxb) jaxbUnmarshaller.unmarshal(new File(XMLConfiguration.FILE.getValue()));
         System.out.println();
         LOGGER.info(client);
     }

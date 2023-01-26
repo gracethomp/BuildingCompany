@@ -1,8 +1,5 @@
 package com.solvd.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BuildingType extends Entity{
     private String typeName;
 

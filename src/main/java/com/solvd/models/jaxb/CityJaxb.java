@@ -1,13 +1,11 @@
 package com.solvd.models.jaxb;
 
-import com.solvd.models.Entity;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement
-public class CityJaxb extends Entity {
+public class CityJaxb {
     private Long id;
     private String cityName;
 
@@ -22,6 +20,7 @@ public class CityJaxb extends Entity {
     public Long getId() {
         return id;
     }
+
     @XmlValue
     public String getCityName() {
         return cityName;

@@ -11,7 +11,7 @@ public enum XMLConfiguration {
     FLOORS("floors"), ADDRESS("address"), TITLE("title"),
     SALARY("salary"), EDIT_USER_RIGHTS("editUserRight"), ID("id"),
     EDIT_BUILDING_RIGHTS("editBuildingRight"), TOTAL_PRICE("totalPrice"),
-    FILE("src/main/resources/client.xml");
+    FILE("src/main/resources/filesToParse/client.xml");
 
     private String value;
 
