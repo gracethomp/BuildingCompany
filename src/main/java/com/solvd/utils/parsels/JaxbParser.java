@@ -1,6 +1,5 @@
 package com.solvd.utils.parsels;
 
-import com.solvd.Main;
 import com.solvd.models.jaxb.ClientJaxb;
 import org.apache.log4j.Logger;
 

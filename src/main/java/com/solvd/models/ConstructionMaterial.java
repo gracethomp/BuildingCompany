@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ConstructionMaterial extends Entity{
     private String material;
-    private List<Building> buildings = new ArrayList<>();
 
     public ConstructionMaterial(){}
     public ConstructionMaterial(Long id, String material) {

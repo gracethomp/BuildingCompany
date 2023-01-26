@@ -1,8 +1,5 @@
 package com.solvd.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Building extends Entity{
     private String buildingName;
     private BuildingType type;
@@ -11,8 +8,6 @@ public class Building extends Entity{
     private ConstructionMaterial material;
     private City city;
     private String address;
-    private List<Apartment> apartments = new ArrayList<>();
-    private List<BuildingOrder> buildingOrders = new ArrayList<>();
 
     public Building(){}
     public Building(String buildingName, BuildingType type, Double area, Integer floors,
@@ -54,14 +49,6 @@ public class Building extends Entity{
         return buildingName;
     }
 
-    public List<BuildingOrder> getBuildingOrders() {
-        return buildingOrders;
-    }
-
-    public List<Apartment> getApartments() {
-        return apartments;
-    }
-
     public void setBuildingName(String buildingName) {
         this.buildingName = buildingName;
     }
@@ -88,14 +75,6 @@ public class Building extends Entity{
 
     public void setFloors(Integer floors) {
         this.floors = floors;
-    }
-
-    public void setBuildingOrders(List<BuildingOrder> buildingOrders) {
-        this.buildingOrders = buildingOrders;
-    }
-
-    public void setApartments(List<Apartment> apartments) {
-        this.apartments = apartments;
     }
 
     @Override

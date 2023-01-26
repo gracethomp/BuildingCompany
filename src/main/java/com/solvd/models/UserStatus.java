@@ -5,7 +5,6 @@ import java.util.List;
 
 public class UserStatus extends Entity{
     private String statusName;
-    private List<User> users = new ArrayList<>();;
 
     public UserStatus(){}
     public UserStatus(Long id, String statusName){
@@ -17,16 +16,8 @@ public class UserStatus extends Entity{
         return statusName;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
     public void setStatusName(String statusName) {
         this.statusName = statusName;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     @Override
