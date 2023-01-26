@@ -74,7 +74,7 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
     }
 
     @Override
-    public Apartment create(Apartment apartment) throws DAOException {
+    public void create(Apartment apartment) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -93,7 +93,6 @@ public class ApartmentDAO extends MySQL implements IApartmentDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return apartment;
     }
 
     @Override

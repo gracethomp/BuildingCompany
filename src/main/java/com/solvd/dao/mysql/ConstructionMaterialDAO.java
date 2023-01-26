@@ -65,7 +65,7 @@ public class ConstructionMaterialDAO extends MySQL implements IConstructionMater
     }
 
     @Override
-    public ConstructionMaterial create(ConstructionMaterial constructionMaterial) throws DAOException {
+    public void create(ConstructionMaterial constructionMaterial) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -81,7 +81,6 @@ public class ConstructionMaterialDAO extends MySQL implements IConstructionMater
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return constructionMaterial;
     }
 
     @Override

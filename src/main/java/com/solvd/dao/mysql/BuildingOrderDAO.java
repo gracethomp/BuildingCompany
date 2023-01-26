@@ -78,7 +78,7 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
     }
 
     @Override
-    public BuildingOrder create(BuildingOrder buildingOrder) throws DAOException {
+    public void create(BuildingOrder buildingOrder) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -100,7 +100,6 @@ public class BuildingOrderDAO extends MySQL implements IBuildingOrderDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return buildingOrder;
     }
 
     @Override

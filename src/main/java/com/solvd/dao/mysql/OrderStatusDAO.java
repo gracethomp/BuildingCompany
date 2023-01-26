@@ -67,7 +67,7 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
     }
 
     @Override
-    public OrderStatus create(OrderStatus orderStatus) throws DAOException {
+    public void create(OrderStatus orderStatus) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -83,7 +83,6 @@ public class OrderStatusDAO extends MySQL implements IOrderStatusDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return orderStatus;
     }
 
     @Override

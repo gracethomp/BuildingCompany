@@ -67,7 +67,7 @@ public class CityDAO extends MySQL implements ICityDAO {
     }
 
     @Override
-    public City create(City city) throws DAOException {
+    public void create(City city) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -83,7 +83,6 @@ public class CityDAO extends MySQL implements ICityDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return city;
     }
 
     @Override

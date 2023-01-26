@@ -1,4 +1,4 @@
-package com.solvd.services;
+package com.solvd.services.factory;
 
 public class DAOFactory {
     public static IDAOFactory getFactory(String db) {

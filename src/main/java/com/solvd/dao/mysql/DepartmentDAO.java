@@ -68,7 +68,7 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
     }
 
     @Override
-    public Department create(Department department) throws DAOException {
+    public void create(Department department) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -85,7 +85,6 @@ public class DepartmentDAO extends MySQL implements IDepartmentDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return department;
     }
 
     @Override

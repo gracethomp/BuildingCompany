@@ -1,4 +1,4 @@
-package com.solvd.services;
+package com.solvd.services.factory;
 
 import com.solvd.dao.*;
 

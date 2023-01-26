@@ -67,7 +67,7 @@ public class BuildingTypeDAO extends MySQL implements IBuildingTypeDAO {
     }
 
     @Override
-    public BuildingType create(BuildingType buildingType) throws DAOException {
+    public void create(BuildingType buildingType) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -83,7 +83,6 @@ public class BuildingTypeDAO extends MySQL implements IBuildingTypeDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return buildingType;
     }
 
     @Override

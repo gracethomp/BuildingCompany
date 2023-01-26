@@ -74,7 +74,7 @@ public class UserDAO extends MySQL implements IUserDAO {
     }
 
     @Override
-    public User create(User user) throws DAOException {
+    public void create(User user) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -95,7 +95,6 @@ public class UserDAO extends MySQL implements IUserDAO {
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return user;
     }
 
     @Override

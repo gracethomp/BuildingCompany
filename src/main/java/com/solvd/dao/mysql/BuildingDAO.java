@@ -79,7 +79,7 @@ public class BuildingDAO extends MySQL implements IBuildingDAO {
     }
 
     @Override
-    public Building create(Building building) throws DAOException {
+    public void create(Building building) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -102,7 +102,6 @@ public class BuildingDAO extends MySQL implements IBuildingDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return building;
     }
 
     @Override

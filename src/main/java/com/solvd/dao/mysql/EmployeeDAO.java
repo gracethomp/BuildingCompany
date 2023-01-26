@@ -76,7 +76,7 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
     }
 
     @Override
-    public Employee create(Employee employee) throws DAOException {
+    public void create(Employee employee) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -98,7 +98,6 @@ public class EmployeeDAO extends MySQL implements IEmployeeDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return employee;
     }
 
     @Override

@@ -69,7 +69,7 @@ public class ClientDAO extends MySQL implements IClientDAO {
     }
 
     @Override
-    public Client create(Client client) throws DAOException {
+    public void create(Client client) throws DAOException {
         Connection connection = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -86,7 +86,6 @@ public class ClientDAO extends MySQL implements IClientDAO {
         finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return client;
     }
 
     @Override
