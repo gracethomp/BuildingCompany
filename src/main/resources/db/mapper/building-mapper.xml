@@ -1,0 +1,16 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.dao.IBuildingDAO">
+    <select id="getByID" parameterType="java.lang.Long" resultMap="buildingResultMap">
+        select * from buildings where id = #{id}
+    </select>
+    <resultMap id="buildingResultMap" type="com.solvd.models.Building">
+        <id column="id" property="id"/>
+        <result column="adress" property="address"/>
+        <association property="type" column="type_id" javaType="com.solvd.models.BuildingType"
+                     select="com.solvd.dao.IBuildingTypeDAO.getByID" fetchType="eager"/>
+        <association property="material" column="constructionMaterial_id" javaType="com.solvd.models.ConstructionMaterial"
+                     select="com.solvd.dao.IConstructionMaterialDAO.getByID" fetchType="eager"/>
+        <association property="city" column="city_id" javaType="com.solvd.models.City"
+                     select="com.solvd.dao.ICityDAO.getByID" fetchType="eager"/>
+    </resultMap>
+</mapper>

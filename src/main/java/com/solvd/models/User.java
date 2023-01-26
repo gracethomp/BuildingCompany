@@ -1,9 +1,5 @@
 package com.solvd.models;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class User extends Entity {
     private String email;
     private String password;
@@ -30,11 +26,11 @@ public class User extends Entity {
     public String getEmail() {
         return email;
     }
-    @XmlElement(name="fName")
+
     public String getFirstName() {
         return firstName;
     }
-    @XmlElement(name="lName")
+
     public String getLastName() {
         return lastName;
     }

@@ -18,7 +18,6 @@ public class Client extends Entity{
     public Long getId() {
         return super.getId();
     }
-
     public City getCity() {
         return city;
     }

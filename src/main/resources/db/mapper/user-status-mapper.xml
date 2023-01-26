@@ -1,0 +1,10 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.dao.IUserStatusDAO">
+    <select id="getByID" parameterType="java.lang.Long" resultMap="userStatusResultMap">
+        select * from userStatuses where id = #{id}
+    </select>
+    <resultMap id="userStatusResultMap" type="com.solvd.models.UserStatus">
+        <id column="id" property="id"/>
+        <result column="status" property="statusName"/>
+    </resultMap>
+</mapper>

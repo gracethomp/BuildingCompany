@@ -1,6 +1,7 @@
 package com.solvd;
 
-import com.solvd.dao.IUserDAO;
+import com.solvd.dao.*;
+import com.solvd.models.OrderStatus;
 import com.solvd.models.User;
 import com.solvd.utils.exceptions.DAOException;
 import com.solvd.utils.parsels.*;
@@ -27,7 +28,8 @@ public class Main {
         reader = Resources.getResourceAsReader("mybatis_config.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         IUserDAO userDAO = sqlSessionFactory.openSession().getMapper(IUserDAO.class);
+        IBuildingOrderDAO dao = sqlSessionFactory.openSession().getMapper(IBuildingOrderDAO.class);
         User user = userDAO.getByID(1L);
-        System.out.println(user);
+        System.out.println(dao.getByID(3L));
     }
 }

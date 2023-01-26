@@ -1,13 +1,11 @@
 package com.solvd.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ConstructionMaterial extends Entity{
     private String material;
 
     public ConstructionMaterial(){}
     public ConstructionMaterial(Long id, String material) {
+        super(id);
         this.material = material;
     }
 

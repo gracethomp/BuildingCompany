@@ -1,0 +1,19 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.dao.IBuildingOrderDAO">
+    <select id="getByID" parameterType="java.lang.Long" resultMap="orderResultMap">
+        select * from buildingOrders where id = #{id}
+    </select>
+    <resultMap id="orderResultMap" type="com.solvd.models.BuildingOrder">
+        <id column="id" property="id"/>
+        <association property="building" column="building_id" javaType="com.solvd.models.Building"
+                     select="com.solvd.dao.IBuildingDAO.getByID" fetchType="eager"/>
+        <association property="client" column="client_id" javaType="com.solvd.models.Client"
+                     select="com.solvd.dao.IClientDAO.getByID" fetchType="eager"/>
+        <association property="apartment" column="appartment_id" javaType="com.solvd.models.Apartment"
+                     select="com.solvd.dao.IApartmentDAO.getByID" fetchType="eager"/>
+        <association property="manager" column="manager_id" javaType="com.solvd.models.Employee"
+                     select="com.solvd.dao.IEmployeeDAO.getByID" fetchType="eager"/>
+        <association property="status" column="status_id" javaType="com.solvd.models.OrderStatus"
+                     select="com.solvd.dao.IOrderStatusDAO.getByID" fetchType="eager"/>
+    </resultMap>
+</mapper>

@@ -1,12 +1,8 @@
 package com.solvd.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Department extends Entity {
     private String departmentName;
     private String phoneNumber;
-    private List<Employee> employeeList = new ArrayList<>();;
 
     public Department(){}
     public Department(Long id, String departmentName, String phoneNumber) {
@@ -23,10 +19,6 @@ public class Department extends Entity {
         return phoneNumber;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
@@ -35,9 +27,6 @@ public class Department extends Entity {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
 
     @Override
     public String toString() {

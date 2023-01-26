@@ -1,0 +1,11 @@
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.dao.IApartmentDAO">
+    <select id="getByID" parameterType="java.lang.Long" resultMap="apartmentResultMap">
+        select * from appartments where id = #{id}
+    </select>
+    <resultMap id="apartmentResultMap" type="com.solvd.models.Apartment">
+        <id column="id" property="id"/>
+        <association property="building" column="building_id" javaType="com.solvd.models.Building"
+                     select="com.solvd.dao.IBuildingDAO.getByID" fetchType="eager"/>
+    </resultMap>
+</mapper>
