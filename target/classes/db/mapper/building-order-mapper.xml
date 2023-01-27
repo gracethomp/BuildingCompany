@@ -1,5 +1,9 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IBuildingOrderDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.BuildingOrder">
+        INSERT INTO buildingOrders(building_id, client_id, totalPrice, appartment_id, manager_id, status_id)
+        VALUES (#{building.id},#{client.id},#{totalPrice},#{apartment.id},#{manager.id},#{status.id})
+    </insert>
     <select id="getByID" parameterType="java.lang.Long" resultMap="orderResultMap">
         select * from buildingOrders where id = #{id}
     </select>

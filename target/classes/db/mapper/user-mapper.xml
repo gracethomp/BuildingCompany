@@ -1,5 +1,9 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IUserDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.User">
+        INSERT INTO users(email, password, firstName, lastName, phoneNumber, status_id)
+        VALUES (#{email},#{password},#{firstName},#{lastName},#{phoneNumber},#{status.id})
+    </insert>
     <select id="getByID" parameterType="java.lang.Long" resultMap="userResultMap">
         select * from users where id = #{id}
     </select>

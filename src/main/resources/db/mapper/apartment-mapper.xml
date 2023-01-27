@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Apartment">
         INSERT INTO appartments(rooms, floor, area, building_id) VALUES (#{rooms},#{floor},#{area}, #{building.id})
     </insert>
+    <update id="update" parameterType="com.solvd.models.Apartment" keyProperty="id" useGeneratedKeys="true">
+        UPDATE appartments SET rooms=#{rooms}, floor=#{floor}, area=#{area}, building_id=#{building.id} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="apartmentResultMap">
         select * from appartments where id = #{id}
     </select>

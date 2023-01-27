@@ -1,10 +1,7 @@
 package com.solvd;
 
 import com.solvd.dao.*;
-import com.solvd.models.Apartment;
-import com.solvd.models.Building;
-import com.solvd.models.OrderStatus;
-import com.solvd.models.User;
+import com.solvd.models.*;
 import com.solvd.utils.exceptions.DAOException;
 import com.solvd.utils.parsels.*;
 import org.apache.ibatis.io.Resources;
@@ -31,16 +28,24 @@ public class Main {
         reader = Resources.getResourceAsReader("mybatis_config.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession session = sqlSessionFactory.openSession();
-        IApartmentDAO apartmentDAO = session.getMapper(IApartmentDAO.class);
+        IBuildingDAO apartmentDAO = session.getMapper(IBuildingDAO.class);
         IBuildingOrderDAO dao = session.getMapper(IBuildingOrderDAO.class);
-        Apartment apartment = new Apartment();
-        apartment.setArea(232.3);
-        apartment.setFloor(2);
-        apartment.setRooms(4);
         Building building = new Building();
-        building.setId(2L);
-        apartment.setBuilding(building);
-        apartmentDAO.create(apartment);
+        building.setAddress("fdsfsdfdsf/232g");
+        building.setArea(32432.34);
+        building.setFloors(4);
+        ConstructionMaterial material = new ConstructionMaterial();
+        material.setId(1L);
+        building.setMaterial(material);
+        City city = new City();
+        BuildingType type = new BuildingType();
+        building.setId(26L);
+        type.setId(1L);
+        city.setId(2L);
+        building.setCity(city);
+        building.setType(type);
+        building.setBuildingName("NAME");
+        apartmentDAO.update(building);
         System.out.println(dao.getByID(3L));
         session.commit();
     }

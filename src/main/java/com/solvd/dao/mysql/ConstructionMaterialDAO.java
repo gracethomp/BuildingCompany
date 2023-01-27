@@ -70,7 +70,7 @@ public class ConstructionMaterialDAO extends MySQL implements IConstructionMater
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("INSERT INTO cities(city) VALUES ?");
+                    .prepareStatement("INSERT INTO constructionMaterials(material) VALUES ?");
             preparedStatement.setString(1, constructionMaterial.getMaterial());
             preparedStatement.executeUpdate();
             preparedStatement.close();

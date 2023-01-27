@@ -1,5 +1,14 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IBuildingDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Building">
+        INSERT INTO buildings(name, type_id, area, floors, constructionMaterial_id, city_id, adress)
+        VALUES (#{buildingName},#{type.id},#{area},#{floors},#{material.id},#{city.id},#{address})
+    </insert>
+    <update id="update" parameterType="com.solvd.models.Building" keyProperty="id" useGeneratedKeys="true">
+        UPDATE buildings SET name=#{buildingName}, type_id=#{type.id}, area=#{area}, floors=#{floors},
+                             constructionMaterial_id=#{material.id}, city_id=#{city.id},adress=#{address}
+        where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="buildingResultMap">
         select * from buildings where id = #{id}
     </select>

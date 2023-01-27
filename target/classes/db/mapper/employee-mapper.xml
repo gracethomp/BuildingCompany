@@ -1,5 +1,9 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IEmployeeDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Employee">
+        INSERT INTO employees(title, salary, department_id, user_id, editUserRight, editBuildingRight)
+        VALUES (#{title},#{salary},#{department.id},#{user.id},#{editUserRight},#{editBuildingRight})
+    </insert>
     <select id="getByID" parameterType="java.lang.Long" resultMap="employeeResultMap">
         select * from employees where id = #{id}
     </select>

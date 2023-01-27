@@ -1,5 +1,8 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IDepartmentDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Department">
+        INSERT INTO departments(department, phoneNumber) VALUES (#{departmentName},#{phoneNumber})
+    </insert>
     <select id="getByID" parameterType="java.lang.Long" resultMap="departmentResultMap">
         select * from departments where id = #{id}
     </select>

@@ -1,5 +1,11 @@
 <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.dao.IUserStatusDAO">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.UserStatus">
+        INSERT INTO userStatuses(status) VALUES #{statusName}
+    </insert>
+    <update id="update" parameterType="com.solvd.models.UserStatus" keyProperty="id" useGeneratedKeys="true">
+        UPDATE userStatuses SET status=#{statusName} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="userStatusResultMap">
         select * from userStatuses where id = #{id}
     </select>
