@@ -11,6 +11,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="employeeResultMap">
         select * from employees where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from employees where id = #{id}
+    </delete>
     <resultMap id="employeeResultMap" type="com.solvd.models.Employee">
         <id column="id" property="id"/>
         <association property="department" column="department_id" javaType="com.solvd.models.Department"

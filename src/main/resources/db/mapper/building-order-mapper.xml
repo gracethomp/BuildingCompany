@@ -12,6 +12,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="orderResultMap">
         select * from buildingOrders where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from buildingOrders where id = #{id}
+    </delete>
     <resultMap id="orderResultMap" type="com.solvd.models.BuildingOrder">
         <id column="id" property="id"/>
         <association property="building" column="building_id" javaType="com.solvd.models.Building"

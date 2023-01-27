@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.ConstructionMaterial">
         INSERT INTO constructionMaterials(material) VALUES #{material}
     </insert>
+    <update id="update" parameterType="com.solvd.models.ConstructionMaterial" keyProperty="id" useGeneratedKeys="true">
+        UPDATE constructionMaterials SET material=#{material} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="materialResultMap">
         select * from constructionMaterials where id = #{id}
     </select>

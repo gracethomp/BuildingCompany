@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="orderStatusResultMap">
         select * from orderStatuses where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from orderStatuses where id = #{id}
+    </delete>
     <resultMap id="orderStatusResultMap" type="com.solvd.models.OrderStatus">
         <id column="id" property="id"/>
         <result column="status" property="statusName"/>

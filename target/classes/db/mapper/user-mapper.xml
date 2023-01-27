@@ -4,6 +4,10 @@
         INSERT INTO users(email, password, firstName, lastName, phoneNumber, status_id)
         VALUES (#{email},#{password},#{firstName},#{lastName},#{phoneNumber},#{status.id})
     </insert>
+    <update id="update" parameterType="com.solvd.models.User" keyProperty="id" useGeneratedKeys="true">
+        UPDATE users SET email=#{email}, password=#{password}, firstName=#{firstName}, lastName=#{lastName},
+                         phoneNumber=#{phoneNumber}, status_id=#{status.id} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="userResultMap">
         select * from users where id = #{id}
     </select>

@@ -12,6 +12,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="buildingResultMap">
         select * from buildings where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from buildings where id = #{id}
+    </delete>
     <resultMap id="buildingResultMap" type="com.solvd.models.Building">
         <id column="id" property="id"/>
         <result column="adress" property="address"/>

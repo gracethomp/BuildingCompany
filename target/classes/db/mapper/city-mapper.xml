@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.City">
         INSERT INTO cities(city) VALUES #{cityName}
     </insert>
+    <update id="update" parameterType="com.solvd.models.City" keyProperty="id" useGeneratedKeys="true">
+        UPDATE cities SET city=#{cityName} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="cityResultMap">
         select * from cities where id = #{id}
     </select>

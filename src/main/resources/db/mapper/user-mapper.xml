@@ -11,6 +11,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="userResultMap">
         select * from users where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from users where id = #{id}
+    </delete>
     <resultMap id="userResultMap" type="com.solvd.models.User" >
         <association property="status" column="status_id" javaType="com.solvd.models.UserStatus"
                      select="com.solvd.dao.IUserStatusDAO.getByID" fetchType="eager"/>

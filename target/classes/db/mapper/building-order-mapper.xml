@@ -4,6 +4,11 @@
         INSERT INTO buildingOrders(building_id, client_id, totalPrice, appartment_id, manager_id, status_id)
         VALUES (#{building.id},#{client.id},#{totalPrice},#{apartment.id},#{manager.id},#{status.id})
     </insert>
+    <update id="update" parameterType="com.solvd.models.BuildingOrder" keyProperty="id" useGeneratedKeys="true">
+        UPDATE buildingOrders SET building_id=#{building.id}, client_id=#{client.id},totalPrice=#{totalPrice},
+                                  appartment_id=#{apartment.id}, manager_id=#{manager.id}, status_id=#{status.id}
+        where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="orderResultMap">
         select * from buildingOrders where id = #{id}
     </select>

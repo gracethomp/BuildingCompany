@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.UserStatus">
         INSERT INTO userStatuses(status) VALUES #{statusName}
     </insert>
+    <update id="update" parameterType="com.solvd.models.UserStatus" keyProperty="id" useGeneratedKeys="true">
+        UPDATE userStatuses SET status=#{statusName} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="userStatusResultMap">
         select * from userStatuses where id = #{id}
     </select>

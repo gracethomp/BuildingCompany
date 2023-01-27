@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Department">
         INSERT INTO departments(department, phoneNumber) VALUES (#{departmentName},#{phoneNumber})
     </insert>
+    <update id="update" parameterType="com.solvd.models.Department" keyProperty="id" useGeneratedKeys="true">
+        UPDATE departments SET department=#{departmentName}, phoneNumber=#{phoneNumber} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="departmentResultMap">
         select * from departments where id = #{id}
     </select>

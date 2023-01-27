@@ -45,7 +45,7 @@ public class Main {
         building.setCity(city);
         building.setType(type);
         building.setBuildingName("NAME");
-        apartmentDAO.update(building);
+        apartmentDAO.remove(26L);
         System.out.println(dao.getByID(3L));
         session.commit();
     }

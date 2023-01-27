@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.Client">
         INSERT INTO clients(userId, city_id) VALUES (#{user.id},#{city.id})
     </insert>
+    <update id="update" parameterType="com.solvd.models.Client" keyProperty="id" useGeneratedKeys="true">
+        UPDATE clients SET userId=#{user.id}, city_id=#{city.id} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="clientResultMap">
         select * from clients where id = #{id}
     </select>

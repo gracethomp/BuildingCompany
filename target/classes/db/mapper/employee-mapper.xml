@@ -4,6 +4,10 @@
         INSERT INTO employees(title, salary, department_id, user_id, editUserRight, editBuildingRight)
         VALUES (#{title},#{salary},#{department.id},#{user.id},#{editUserRight},#{editBuildingRight})
     </insert>
+    <update id="update" parameterType="com.solvd.models.Employee" keyProperty="id" useGeneratedKeys="true">
+        UPDATE employees SET title=#{title}, salary=#{salary},department_id=#{department.id},user_id=#{user.id},
+                             editUserRight=#{editUserRight}, editBuildingRight=#{editBuildingRight} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="employeeResultMap">
         select * from employees where id = #{id}
     </select>

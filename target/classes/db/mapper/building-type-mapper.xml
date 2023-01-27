@@ -3,6 +3,9 @@
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.solvd.models.BuildingType">
         INSERT INTO types(type) VALUES #{type}
     </insert>
+    <update id="update" parameterType="com.solvd.models.BuildingType" keyProperty="id" useGeneratedKeys="true">
+        UPDATE types SET type=#{type} where id=#{id}
+    </update>
     <select id="getByID" parameterType="java.lang.Long" resultMap="typeResultMap">
         select * from types where id = #{id}
     </select>

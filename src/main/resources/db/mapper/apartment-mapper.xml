@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="apartmentResultMap">
         select * from appartments where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from appartments where id = #{id}
+    </delete>
     <resultMap id="apartmentResultMap" type="com.solvd.models.Apartment">
         <id column="id" property="id"/>
         <association property="building" column="building_id" javaType="com.solvd.models.Building"
