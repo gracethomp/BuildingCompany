@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="materialResultMap">
         select * from constructionMaterials where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from constructionMaterials where id = #{id}
+    </delete>
     <resultMap id="materialResultMap" type="com.solvd.models.ConstructionMaterial">
         <id column="id" property="id"/>
         <result column="material" property="material"/>

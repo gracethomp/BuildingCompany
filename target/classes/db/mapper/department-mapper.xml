@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="departmentResultMap">
         select * from departments where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from departments where id = #{id}
+    </delete>
     <resultMap id="departmentResultMap" type="com.solvd.models.Department">
         <id column="id" property="id"/>
         <result column="department" property="departmentName"/>

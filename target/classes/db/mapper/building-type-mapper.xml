@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="typeResultMap">
         select * from types where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from types where id = #{id}
+    </delete>
     <resultMap id="typeResultMap" type="com.solvd.models.BuildingType">
         <id column="id" property="id"/>
         <result column="type" property="typeName"/>

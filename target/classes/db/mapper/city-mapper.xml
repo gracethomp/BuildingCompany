@@ -9,6 +9,9 @@
     <select id="getByID" parameterType="java.lang.Long" resultMap="cityResultMap">
         select * from cities where id = #{id}
     </select>
+    <delete id="remove" parameterType="java.lang.Long">
+        DELETE from cities where id = #{id}
+    </delete>
     <resultMap id="cityResultMap" type="com.solvd.models.City">
         <id column="id" property="id"/>
         <result column="city" property="cityName"/>

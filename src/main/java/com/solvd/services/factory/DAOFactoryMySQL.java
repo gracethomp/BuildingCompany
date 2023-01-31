@@ -4,6 +4,14 @@ import com.solvd.dao.*;
 import com.solvd.dao.mysql.*;
 
 public class DAOFactoryMySQL implements IDAOFactory{
+    private static final DAOFactoryMySQL INSTANCE = new DAOFactoryMySQL();
+
+    private DAOFactoryMySQL(){}
+
+    public static DAOFactoryMySQL getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public IApartmentDAO getApartmentDAO() {
         return ApartmentDAO.getInstance();
