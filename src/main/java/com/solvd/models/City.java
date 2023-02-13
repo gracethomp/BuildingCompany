@@ -1,28 +1,8 @@
 package com.solvd.models;
 
-import javax.xml.bind.annotation.XmlValue;
-
-public class City extends Entity{
-    private String cityName;
-
+public class City extends AbstractCity{
     public City(){}
     public City(Long id, String cityName){
-        super(id);
-        this.cityName = cityName;
-    }
-
-    @XmlValue
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    @Override
-    public String toString() {
-        return "City{" +
-                "cityName='" + cityName + '\'' + '}';
+        super(id, cityName);
     }
 }

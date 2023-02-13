@@ -2,11 +2,11 @@ package com.solvd.models;
 
 public abstract class AbstractBuilding extends Entity {
     private String buildingName;
-    private BuildingType type;
+    private AbstractType type;
     private Double area;
     private Integer floors;
-    private ConstructionMaterial material;
-    private City city;
+    private AbstractMaterial material;
+    private AbstractCity city;
     private String address;
 
     public AbstractBuilding(){}
@@ -21,15 +21,15 @@ public abstract class AbstractBuilding extends Entity {
         this.address = address;
     }
 
-    public City getCity() {
+    public AbstractCity getCity() {
         return city;
     }
 
-    public BuildingType getType() {
+    public AbstractType getType() {
         return type;
     }
 
-    public ConstructionMaterial getMaterial() {
+    public AbstractMaterial getMaterial() {
         return material;
     }
 
@@ -75,5 +75,18 @@ public abstract class AbstractBuilding extends Entity {
 
     public void setFloors(Integer floors) {
         this.floors = floors;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractBuilding{" +
+                "buildingName='" + buildingName + '\'' +
+                ", type=" + type +
+                ", area=" + area +
+                ", floors=" + floors +
+                ", material=" + material +
+                ", city=" + city +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

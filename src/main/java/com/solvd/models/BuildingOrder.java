@@ -1,12 +1,12 @@
 package com.solvd.models;
 
 public class BuildingOrder extends Entity{
-    private Building building;
-    private Client client;
-    private Employee manager;
+    private AbstractBuilding building;
+    private AbstractClient client;
+    private AbstractEmployee manager;
     private Double totalPrice;
-    private Apartment apartment;
-    private OrderStatus status;
+    private AbstractApartment apartment;
+    private AbstractStatus status;
 
     public BuildingOrder(){}
     public BuildingOrder(Long id, Building building, Client client, Employee manager,
@@ -29,15 +29,15 @@ public class BuildingOrder extends Entity{
         this.apartment = apartment;
     }
 
-    public Building getBuilding() {
+    public AbstractBuilding getBuilding() {
         return building;
     }
 
-    public Apartment getApartment() {
+    public AbstractApartment getApartment() {
         return apartment;
     }
 
-    public Client getClient() {
+    public AbstractClient getClient() {
         return client;
     }
 
@@ -45,11 +45,11 @@ public class BuildingOrder extends Entity{
         return totalPrice;
     }
 
-    public Employee getManager() {
+    public AbstractEmployee getManager() {
         return manager;
     }
 
-    public OrderStatus getStatus() {
+    public AbstractStatus getStatus() {
         return status;
     }
 
