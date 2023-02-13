@@ -1,7 +1,5 @@
 package com.solvd.models;
 
-import javax.xml.bind.annotation.XmlAttribute;
-
 public abstract class Entity {
     private Long id;
 

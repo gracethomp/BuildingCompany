@@ -1,6 +1,6 @@
 package com.solvd.models;
 
-public class Building extends AbstractBuilding{
+public abstract class AbstractBuilding extends Entity {
     private String buildingName;
     private BuildingType type;
     private Double area;
@@ -9,10 +9,16 @@ public class Building extends AbstractBuilding{
     private City city;
     private String address;
 
-    public Building(){}
-    public Building(String buildingName, BuildingType type, Double area, Integer floors,
+    public AbstractBuilding(){}
+    public AbstractBuilding(String buildingName, BuildingType type, Double area, Integer floors,
                     ConstructionMaterial material, City city, String address){
-        super(buildingName, type, area, floors, material, city, address);
+        this.buildingName = buildingName;
+        this.type = type;
+        this.area = area;
+        this.floors = floors;
+        this.material = material;
+        this.city = city;
+        this.address = address;
     }
 
     public City getCity() {
@@ -69,17 +75,5 @@ public class Building extends AbstractBuilding{
 
     public void setFloors(Integer floors) {
         this.floors = floors;
-    }
-
-    @Override
-    public String toString() {
-        return "Building{" +
-                "type=" + type +
-                ", area=" + area +
-                ", floors=" + floors +
-                ", material=" + material +
-                ", city=" + city +
-                ", address='" + address + '\'' +
-                '}';
     }
 }

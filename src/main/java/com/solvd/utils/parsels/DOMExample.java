@@ -119,6 +119,7 @@ public class DOMExample {
                 getNamedItem(XMLConfiguration.ID.getValue()).getNodeValue()),
                 cityFromFile.getTextContent());
     }
+
     private static BuildingOrder readBuildingOrder(Node buildingOrderFromFile, Node userManagerFromFile) {
         BuildingOrder buildingOrder = new BuildingOrder();
         if (buildingOrderFromFile.getNodeType() == Node.ELEMENT_NODE) {
