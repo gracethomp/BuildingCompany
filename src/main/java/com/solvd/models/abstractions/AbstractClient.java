@@ -1,9 +1,13 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
+
+import com.solvd.models.BuildingOrder;
+import com.solvd.models.City;
+import com.solvd.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractClient extends Entity{
+public abstract class AbstractClient extends Entity{
     private AbstractCity city;
     private AbstractUser user;
     private List<BuildingOrder> buildingOrders = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.solvd.models;
 
+import com.solvd.models.abstractions.*;
+
 public class BuildingOrder extends Entity{
     private AbstractBuilding building;
     private AbstractClient client;

@@ -1,4 +1,4 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
 public abstract class AbstractType extends Entity{
     private String typeName;

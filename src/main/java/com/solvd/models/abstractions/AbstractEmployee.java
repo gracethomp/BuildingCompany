@@ -1,6 +1,9 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
-public class AbstractEmployee extends Entity{
+import com.solvd.models.Department;
+import com.solvd.models.User;
+
+public abstract class AbstractEmployee extends Entity{
     private String title;
     private Double salary;
     private AbstractDepartment department;

@@ -1,4 +1,8 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
+
+import com.solvd.models.BuildingType;
+import com.solvd.models.City;
+import com.solvd.models.ConstructionMaterial;
 
 public abstract class AbstractBuilding extends Entity {
     private String buildingName;
@@ -11,7 +15,7 @@ public abstract class AbstractBuilding extends Entity {
 
     public AbstractBuilding(){}
     public AbstractBuilding(String buildingName, BuildingType type, Double area, Integer floors,
-                    ConstructionMaterial material, City city, String address){
+                            ConstructionMaterial material, City city, String address){
         this.buildingName = buildingName;
         this.type = type;
         this.area = area;

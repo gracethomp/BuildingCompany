@@ -1,6 +1,8 @@
 package com.solvd.models;
 
-public class Building extends AbstractBuilding{
+import com.solvd.models.abstractions.AbstractBuilding;
+
+public class Building extends AbstractBuilding {
     public Building(){}
     public Building(String buildingName, BuildingType type, Double area, Integer floors,
                     ConstructionMaterial material, City city, String address){

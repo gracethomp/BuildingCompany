@@ -1,6 +1,6 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
-public class AbstractMaterial extends Entity{
+public abstract class AbstractMaterial extends Entity{
     private String material;
 
     public AbstractMaterial(){}

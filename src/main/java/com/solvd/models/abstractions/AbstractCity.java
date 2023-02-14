@@ -1,6 +1,6 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
-public class AbstractCity extends Entity{
+public abstract class AbstractCity extends Entity{
     private String cityName;
 
     public AbstractCity(){}

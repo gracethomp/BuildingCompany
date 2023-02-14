@@ -1,4 +1,4 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
 public abstract class AbstractStatus extends Entity {
     private String statusName;

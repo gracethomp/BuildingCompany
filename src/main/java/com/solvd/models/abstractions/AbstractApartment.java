@@ -1,4 +1,6 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
+
+import com.solvd.models.Building;
 
 public abstract class AbstractApartment extends Entity{
     private Integer rooms;

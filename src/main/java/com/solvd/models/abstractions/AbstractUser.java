@@ -1,6 +1,8 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
-public class AbstractUser extends Entity{
+import com.solvd.models.UserStatus;
+
+public abstract class AbstractUser extends Entity{
     private String email;
     private String password;
     private String firstName;

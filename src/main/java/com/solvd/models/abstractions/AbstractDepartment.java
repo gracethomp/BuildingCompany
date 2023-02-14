@@ -1,6 +1,6 @@
-package com.solvd.models;
+package com.solvd.models.abstractions;
 
-public class AbstractDepartment extends Entity{
+public abstract class AbstractDepartment extends Entity{
     private String departmentName;
     private String phoneNumber;
 
